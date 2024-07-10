@@ -1,0 +1,212 @@
+@import "../../index.scss";
+
+.taskContainer {
+    display: flex;
+    .tableContainer {
+        flex: 2;
+        margin-right: 20px;
+        border-radius: 10px;
+        .toolbar {
+            display: flex;
+            margin-bottom: 20px;
+            justify-content: space-between;
+            align-items: center;
+            .searchContainer {
+                width: 50%;
+                display: flex;
+                margin-right: 10px;
+                input {
+                    flex: 1;
+                    font-size: 20px;
+                    padding: 5px;
+                    font-family: "Indie Flower", cursive;
+                    outline: none;
+                    background-color: var(--third-clg);
+                    border: rgba(0, 0, 0, 0.196) solid 1px;
+                    border-radius: 5px;
+                    margin-right: 10px;
+                }
+                button {
+                    font-size: 20px;
+                    font-family: "Indie Flower", cursive;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                    outline: none;
+                    border: none;
+                    background-color: var(--primary-clg);
+                    box-shadow: 5px 5px 0px var(--secondary-clg);
+                    &:active {
+                        box-shadow: 3px 3px 0px var(--secondary-clg);
+                    }
+                }
+            }
+            .sortContainer {
+                display: flex;
+                font-size: 20px;
+                .sortOption {
+                    margin-left: 20px;
+                    display: flex;
+                    .sortOpt {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+        .table {
+            font-size: 20px;
+            .row {
+                display: flex;
+                .cell {
+                    flex: 1;
+                    text-align: center;
+                }
+            }
+            .header {
+                .row {
+                    background-color: var(--secondary-clg);
+                }
+            }
+            .body {
+                min-height: 500px;
+                .row {
+                    padding: 5px 0;
+                    transition: linear 0.1s;
+                    border: solid 0.5px rgba(0, 0, 0, 0.28);
+                    cursor: pointer;
+                    &:nth-child(odd) {
+                        background-color: var(--third-clg);
+                    }
+                    &:active {
+                        transform: scale(1.01);
+                    }
+                }
+                .title {
+                    width: 10px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap; /* Prevent text from wrapping */
+                    overflow: hidden;
+                }
+            }
+            .footer {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+                .pagination {
+                    span {
+                        margin: 0 20px;
+                        font-size: 20px;
+                    }
+                    .pagButton {
+                        font-family: "Indie Flower", cursive;
+                        padding: 5px 20px;
+                        font-size: 20px;
+                        cursor: pointer;
+                        outline: none;
+                        border: none;
+                        background-color: var(--primary-clg);
+                        box-shadow: 5px 5px 0px var(--secondary-clg);
+                        &:active {
+                            box-shadow: 3px 3px 0px var(--secondary-clg);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .updateTaskContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 20px;
+        background-color: var(--third-clg);
+        border-radius: 10px;
+        border: black solid 1px;
+        h1 {
+            text-align: center;
+        }
+        form {
+            flex: 1;
+            font-size: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            .taskTitle,
+            .taskPriority,
+            .taskSchedule,
+            .taskDescription {
+                display: flex;
+                margin-bottom: 20px;
+                .title {
+                    margin-right: 5%;
+                }
+            }
+            .taskTitle {
+                input {
+                    flex: 1;
+                    font-family: "Indie Flower", cursive;
+                    outline: none;
+                    border: none;
+                    background-color: transparent;
+                    border-bottom: black dashed 1px;
+                    font-size: 20px;
+                }
+            }
+            .taskPriority {
+                justify-content: space-between;
+                .priorityOption {
+                    width: 70%;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+            .taskSchedule {
+                input {
+                    width: 40%;
+                    text-align: center;
+                }
+            }
+            .taskDescription {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                textarea {
+                    font-size: 20px;
+                    flex: 1;
+                    padding: 10px;
+                    font-family: "Indie Flower", cursive;
+                    resize: none;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+            .footer {
+                display: flex;
+                #updateButton {
+                    flex: 2;
+                    margin-right: 20px;
+                    background-color: #fac898;
+                    box-shadow: 5px 5px 0px #ff8b1f;
+                    &:active {
+                        box-shadow: 3px 3px 0px #ff8b1f;
+                    }
+                }
+                button[type="submit"] {
+                    flex: 1;
+                    padding: 5px 0;
+                    font-size: 20px;
+                    font-family: "Indie Flower", cursive;
+                    cursor: pointer;
+                    outline: none;
+                    border: none;
+                    background-color: var(--primary-clg);
+                    box-shadow: 5px 5px 0px var(--secondary-clg);
+                    &:active {
+                        box-shadow: 3px 3px 0px var(--secondary-clg);
+                    }
+                }
+            }
+        }
+    }
+}
