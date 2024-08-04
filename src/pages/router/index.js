@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import WelcomeScreen from "../welcome";
-import { createRandomTasksArray } from "../../utils";
+import { createRandomTaskHeap } from "../../components/task";
 import { useDispatch } from "react-redux";
 import { taskAction } from "../../storage/taskReducer";
 const Router = () => {
-    const [screen, setScreen] = useState();
-    const dispatch = useDispatch();
+  const [screen, setScreen] = useState();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const dummyData = createRandomTasksArray(100);
-        dispatch(taskAction.fetch(dummyData));
-    }, [dispatch]); //Generate task data
+  useEffect(() => {
+    const heap = createRandomTaskHeap(100);
+    dispatch(taskAction.fetch(heap));
+  }, [dispatch]); //Generate task data
 
-    useEffect(() => {
-        setScreen(<WelcomeScreen setScreen={setScreen} />);
-    }, []);
+  useEffect(() => {
+    setScreen(<WelcomeScreen setScreen={setScreen} />);
+  }, []);
 
-    return screen;
+  return screen;
 };
 
 export default Router;

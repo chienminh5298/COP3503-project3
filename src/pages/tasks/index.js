@@ -6,7 +6,7 @@ import { formatDateToMMDDYYYY } from "../../utils";
 import DetailTask from "./detailTask";
 
 const Tasks = () => {
-    const data = useSelector((state) => state.taskReducer.data);
+    const data = useSelector((state) => state.taskReducer.data.sortedHeap);
 
     // Handle task selection
     const [task, setTask] = useState(data.length !== 0 ? data[0] : undefined);
@@ -16,13 +16,17 @@ const Tasks = () => {
     const [page, setPage] = useState(0);
     const pageData = data.slice(page * MAX_PER_PAGE, MAX_PER_PAGE * (page + 1));
     const renderData = pageData.map((task) => {
+        if (!task.createdAt || !task.dueDate) {
+            console.log("task.createdAt or task.dueDate is null. Task: ", task.json());
+        }
+
         return (
             <div className="row" key={task.id} onClick={() => setTask(task)}>
                 <div className="cell">{task.id}</div>
                 <div className="cell title">{task.title}</div>
                 <div className="cell">{task.priority}</div>
-                <div className="cell">{formatDateToMMDDYYYY(task.createdDate)}</div>
-                <div className="cell">{formatDateToMMDDYYYY(task.expDate)}</div>
+                <div className="cell">{formatDateToMMDDYYYY(task.createdAt)}</div>
+                <div className="cell">{formatDateToMMDDYYYY(task.dueDate)}</div>
             </div>
         );
     });
@@ -41,12 +45,12 @@ const Tasks = () => {
                         </div>
                         <div className="sortOption">
                             <div className="sortOpt">
-                                <input type="radio" id="sortPriority" name="sort" checked={true} />
-                                <label for="sortPriority">Priority</label>
+                                <input type="radio" id="sortPriority" name="sort" defaultChecked={true} />
+                                <label htmlFor="sortPriority">Priority</label>
                             </div>
                             <div>
                                 <input type="radio" id="sortExpDate" name="sort" />
-                                <label for="sortExpDate">Exp date</label>
+                                <label htmlFor="sortExpDate">Exp date</label>
                             </div>
                         </div>
                     </div>

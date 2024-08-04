@@ -6,7 +6,7 @@ import { formatDateToMMDDYYYY } from "../../utils";
 import CreateForm from "./createForm";
 
 const Home = () => {
-    const data = useSelector((state) => state.taskReducer.data.slice(0, 12));
+    const data = useSelector((state) => state.taskReducer.data.sortedHeap.slice(0, 12));
 
     useEffect(() => {
         // Sort data by Exp date here
@@ -17,8 +17,8 @@ const Home = () => {
             <div className="row" key={task.id}>
                 <div className="cell title">{task.title}</div>
                 <div className="cell">{task.priority}</div>
-                <div className="cell">{formatDateToMMDDYYYY(task.createdDate)}</div>
-                <div className="cell">{formatDateToMMDDYYYY(task.expDate)}</div>
+                <div className="cell">{formatDateToMMDDYYYY(task.createdAt)}</div>
+                <div className="cell">{formatDateToMMDDYYYY(task.dueDate)}</div>
             </div>
         );
     });

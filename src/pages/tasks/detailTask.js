@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { formateDateToYYYYMMDD } from "../../utils";
+import React from "react";
+import { formatDateToYYYYMMDD } from "../../utils/index.js";
 import { useForm } from "react-hook-form";
 
 const DetailTask = ({ task }) => {
@@ -21,7 +21,7 @@ const DetailTask = ({ task }) => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="generalInfo">
                     <div className="taskTitle">
-                        <label className="title" for="title">
+                        <label className="title" htmlFor="title">
                             Title
                         </label>
                         <span>{task.title}</span>
@@ -30,35 +30,35 @@ const DetailTask = ({ task }) => {
                         <label className="title">Priority</label>
                         <div className="priorityOption">
                             <div>
-                                <input type="radio" id="high" name="priority" value={"High"} checked={task.priority === "High"} {...register("priority")} />
-                                <label className="priorityLabel" for="high">
+                                <input type="radio" id="high" name="priority" value={"High"} defaultChecked={task.priority === "High"} {...register("priority")} />
+                                <label className="priorityLabel" htmlFor="high">
                                     High
                                 </label>
                             </div>
 
                             <div>
-                                <input type="radio" id="medium" name="priority" value={"Medium"} checked={task.priority === "Medium"} {...register("priority")} />
-                                <label className="priorityLabel" for="medium">
+                                <input type="radio" id="medium" name="priority" value={"Medium"} defaultChecked={task.priority === "Medium"} {...register("priority")} />
+                                <label className="priorityLabel" htmlFor="medium">
                                     Medium
                                 </label>
                             </div>
                             <div>
-                                <input type="radio" id="standard" name="priority" value={"Standard"} checked={task.priority === "Standard"} {...register("priority")} />
-                                <label className="priorityLabel" for="standard">
+                                <input type="radio" id="standard" name="priority" value={"Standard"} defaultChecked={task.priority === "Standard"} {...register("priority")} />
+                                <label className="priorityLabel" htmlFor="standard">
                                     Standard
                                 </label>
                             </div>
                         </div>
                     </div>
                     <div className="taskSchedule">
-                        <label className="title" for="schedule">
+                        <label className="title" htmlFor="schedule">
                             Exp date
                         </label>
-                        <input type="date" id="schedule" value={formateDateToYYYYMMDD(task.expDate)} {...register("expDate", { required: true })} />
+                        <input type="date" id="schedule" value={formatDateToYYYYMMDD(task.dueDate)} {...register("expDate", { required: true })} />
                     </div>
                 </div>
                 <div className="taskDescription">
-                    <label for="description" className="title">
+                    <label htmlFor="description" className="title">
                         Description
                     </label>
                     <textarea id="description" value={task.description} {...register("description", { required: true })} />

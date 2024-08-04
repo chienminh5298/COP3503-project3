@@ -7,6 +7,9 @@ const taskSlice = createSlice({
         fetch: (state, action) => {
             state.data = action.payload;
         },
+        // createTask: (state, action) => {
+        //     state.data.insert(new Task(action.payload));
+        // }
     },
 });
 
