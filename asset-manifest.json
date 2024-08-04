@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/COP3503-project3/static/css/main.ba24f486.css",
+    "main.js": "/COP3503-project3/static/js/main.09e9e6f8.js",
+    "index.html": "/COP3503-project3/index.html",
+    "main.ba24f486.css.map": "/COP3503-project3/static/css/main.ba24f486.css.map",
+    "main.09e9e6f8.js.map": "/COP3503-project3/static/js/main.09e9e6f8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ba24f486.css",
+    "static/js/main.09e9e6f8.js"
+  ]
+}
