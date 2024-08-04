@@ -2,10 +2,10 @@
 // Implemented w/ separate chaining
 
 export class HashMap {
-    constructor(size = 5) { // default 5?
-        this.keyMap = new Array (size); // array of arrays of pairs (also array): 0 | [ (key, val), (key, val), ... ]
-        this.maxLoadFactor = 0.75;
-        this.entries = 0; // buckets in use
+    constructor(keyMap = new Array(5), maxLoadFactor = 0.75, entries = 0) {
+        this.keyMap = keyMap; // array of arrays of pairs (also array): 0 | [ (key, val), (key, val), ... ]
+        this.maxLoadFactor = maxLoadFactor
+        this.entries = entries; // buckets in use
     }
 
     // Private

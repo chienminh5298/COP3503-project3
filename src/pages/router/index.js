@@ -8,7 +8,7 @@ const Router = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const heap = createRandomTaskHeap(100);
+    const heap = createRandomTaskHeap(10);
     dispatch(taskAction.fetch(heap));
   }, [dispatch]); //Generate task data
 

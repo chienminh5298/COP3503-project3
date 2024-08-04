@@ -3,14 +3,15 @@ import { nouns, verbs, names, adverbs } from "../components/words";
 import { Heap } from "../components/heap.js";
 
 export class Task {
-  constructor(id, title, description, dueDate, priority) {
-    this.id = id;
+  constructor({ id, title, description, dueDate, priority }) {
+    this.id = id || crypto.randomUUID();
     this.title = title;
     this.description = description;
-    this.dueDate = dueDate;
+    this.dueDate = typeof dueDate === "string" || dueDate instanceof String ? new Date(dueDate) : dueDate;
     this.priority = priority; // "High", "Medium", "Standard"
     this.createdAt = new Date();
     this.updatedAt = new Date();
+    this.isResolved = false;
   }
 
   json() {
@@ -50,6 +51,11 @@ export class Task {
 
   setDueDate(dueDate) {
     this.dueDate = new Date(dueDate);
+    this.updatedAt = new Date();
+  }
+
+  setResolved() {
+    this.isResolved = true;
     this.updatedAt = new Date();
   }
 
@@ -101,12 +107,11 @@ export function createRandomTask() {
     determiner = `${name}'s`;
   }
 
-  let id = crypto.randomUUID();
   let title = `${verb} ${determiner} ${noun} ${adverb}`;
   let description = `${title} and do it super well and on time, making everyone happy.`;
   let priority = getRandomPriority();
   let dueDate = getRandomFutureDate();
-  let task = new Task(id, title, description, dueDate, priority);
+  let task = new Task({ title, description, dueDate, priority });
   return task;
 }
 

@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Bounce, toast } from "react-toastify";
+import { useDispatch} from "react-redux";
+import { taskAction } from "../../storage/taskReducer";
 const CreateForm = () => {
   const {
     register,
@@ -8,8 +10,10 @@ const CreateForm = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const onSubmit = (e) => {
-    // taskAction.createTask(data);
+  const dispatch = useDispatch();
+  const onSubmit = (data) => {
+    console.log("data", data);
+    dispatch(taskAction.createTask(data));
     toast.success("Task created", {
       position: "top-left",
       autoClose: 3000,
@@ -59,7 +63,7 @@ const CreateForm = () => {
         </div>
         <div className="taskSchedule">
           <label className="title" htmlFor="schedule">
-            Exp date
+            Due Date
           </label>
           <input type="date" id="schedule" {...register("dueDate", { required: true })} />
         </div>
