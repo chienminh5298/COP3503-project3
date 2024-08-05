@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { formatDateToYYYYMMDD } from "../../utils";
@@ -69,13 +68,16 @@ const Tasks = () => {
           <div className="body">{renderData}</div>
           <div className="footer">
             <div className="pagination">
-              <button className="pageButton" disabled={page === 0 && true} onClick={() => setPage(page - 1)}>
+              <button className="pageButton" onClick={() => page > 0 ? setPage(page - 1) : setPage(Math.ceil(sortedHeap.length / MAX_PER_PAGE) - 1)}>
                 Prev
               </button>
               <span>
                 {page + 1}/{Math.ceil(sortedHeap.length / MAX_PER_PAGE)}
               </span>
-              <button className="pageButton" disabled={page === Math.ceil(sortedHeap.length / MAX_PER_PAGE) - 1 && true} onClick={() => setPage(page + 1)}>
+              <button
+                className="pageButton"
+                onClick={() => page < Math.ceil(sortedHeap.length / MAX_PER_PAGE) - 1 ? setPage(page + 1) : setPage(0)}
+              >
                 Next
               </button>
             </div>

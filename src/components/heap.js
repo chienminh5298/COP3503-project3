@@ -22,6 +22,14 @@ export class Heap {
     this.arr[j] = temp;
   }
 
+  indexOf(id) {
+    for (let i = 0; i < this.arr.length; i++) {
+      if (this.arr[i].id === id) {
+        return i;
+      }
+    }
+  }
+
   _heapifyDown(i) {
     let leftIndex = this._getLeftIndex(i);
     let rightIndex = this._getRightIndex(i);
@@ -60,6 +68,14 @@ export class Heap {
     this.updateSortedHeap();
   }
 
+  insertMany(tasks) {
+    for (let task of tasks) {
+      this.arr.push(task);
+      this._heapifyUp(this.arr.length - 1);
+    }
+    this.updateSortedHeap();
+  }
+
   extractMin() {
     const root = this.arr[0];
     this.arr[0] = this.arr[this.arr.length - 1];
@@ -78,10 +94,10 @@ export class Heap {
       i++;
     }
     if (i === this.arr.length) {
-      console.log("Element not found");
+      console.log("Element not found in delete");
       return;
     } else {
-      console.log("Element found");
+      console.log("Element found in delete");
     }
 
     this._swap(i, this.arr.length - 1);
@@ -95,27 +111,15 @@ export class Heap {
     } else {
       this._heapifyDown(i);
     }
-
     this.updateSortedHeap();
   }
 
-  indexOf(id) {
-    for (let i = 0; i < this.arr.length; i++) {
-      if (this.arr[i].id === id) {
-        return i;
-      }
-    }
-  }
-
   updateElement(oldTask, newTask) {
-    console.log("updateElement");
     let i = this.indexOf(oldTask.id);
     if (i === -1) {
-      console.log("Element not found");
+      console.log("Element not found in updateElement");
       return;
     }
-    console.log("Old task: ", oldTask);
-    console.log("New task: ", newTask);
 
     if (oldTask.compare(newTask) !== 0) {
       oldTask.setDescription(newTask.description);

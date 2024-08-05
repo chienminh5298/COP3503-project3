@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { taskAction } from "../../storage/taskReducer";
 import { createRandomTask, Task } from "../../components/task.js";
 const CreateForm = () => {
-  const [numRandomTasks, setNumRandomTasks] = useState(1000);
+  const [numRandomTasks, setNumRandomTasks] = useState(100000);
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data, event) => {
@@ -42,9 +42,11 @@ const CreateForm = () => {
       });
       reset(); // Clear form
     } else {
+      const tasks = [];
       for (let i = 0; i < numRandomTasks; i++) {
-        dispatch(taskAction.insertTask(createRandomTask()));
+        tasks.push(createRandomTask());
       }
+      dispatch(taskAction.insertManyTasks(tasks));
       toast.success(`Successfully created ${numRandomTasks} tasks`, {
         position: "top-left",
         autoClose: 1500,
