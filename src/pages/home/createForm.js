@@ -6,6 +6,7 @@ import { taskAction } from "../../storage/taskReducer";
 import { createRandomTask, Task } from "../../components/task.js";
 const CreateForm = () => {
   const [numRandomTasks, setNumRandomTasks] = useState(100000);
+  const [isRandomButtonDisabled, setIsRandomButtonDisabled] = useState(false);  
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data, event) => {
@@ -58,6 +59,7 @@ const CreateForm = () => {
         theme: "colored",
         transition: Bounce,
       });
+      setIsRandomButtonDisabled(true);
     }
   };
 
@@ -81,13 +83,13 @@ const CreateForm = () => {
             </div>
 
             <div>
-              <input type="radio" id="standard" name="priority" value={"Standard"} {...register("priority")} />
+              <input type="radio" id="standard" name="priority" value={"Standard"} defaultChecked={true} {...register("priority")} />
               <label className="priorityLabel" htmlFor="standard">
                 Standard
               </label>
             </div>
             <div>
-              <input type="radio" id="low" name="priority" value={"Low"} defaultChecked={true} {...register("priority")} />
+              <input type="radio" id="low" name="priority" value={"Low"} {...register("priority")} />
               <label className="priorityLabel" htmlFor="low">
                 Low
               </label>
@@ -110,7 +112,7 @@ const CreateForm = () => {
       <button type="submit" name="create">
         Create
       </button>
-      <button type="submit" name="random">
+      <button type="submit" name="random" disabled={isRandomButtonDisabled}>
         Randomly Generate {numRandomTasks} Tasks
       </button>
     </form>
