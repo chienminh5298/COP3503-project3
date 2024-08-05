@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./index.scss";
 import { useSelector } from "react-redux";
 import { formatDateToYYYYMMDD } from "../../utils";
@@ -34,27 +34,6 @@ const Tasks = () => {
   return (
     <div className="taskContainer">
       <div className="tableContainer">
-        {/* <div className="toolbar">
-          <div className="searchContainer">
-            <input id="search" placeholder="Search by id or title" />
-            <button>Searchs</button>
-          </div>
-          <div className="sortContainer">
-            <div>
-              <label>Sort by:</label>
-            </div>
-            <div className="sortOption">
-              <div className="sortOpt">
-                <input type="radio" id="sortPriority" name="sort" defaultChecked={true} />
-                <label htmlFor="sortPriority">Priority</label>
-              </div>
-              <div>
-                <input type="radio" id="sortDueDate" name="sort" />
-                <label htmlFor="sortDueDate">Due Date</label>
-              </div>
-            </div>
-          </div>
-        </div> */}
         <div className="table">
           <div className="header">
             <div className="row">

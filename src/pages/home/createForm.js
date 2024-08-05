@@ -6,7 +6,7 @@ import { taskAction } from "../../storage/taskReducer";
 import { createRandomTask, Task } from "../../components/task.js";
 const CreateForm = () => {
   const [numRandomTasks, setNumRandomTasks] = useState(100000);
-  const [isRandomButtonDisabled, setIsRandomButtonDisabled] = useState(false);  
+  const [isRandomButtonDisabled, setIsRandomButtonDisabled] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const dispatch = useDispatch();
   const onSubmit = (data, event) => {
@@ -15,6 +15,21 @@ const CreateForm = () => {
       const { title, description, dueDate, priority } = data;
       if (!title || !description || !dueDate || !priority) {
         toast.error("Please fill in all fields", {
+          position: "top-left",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+        return;
+      }
+
+      if (new Date(`${dueDate}T00:00:00.000`) < new Date()) {
+        toast.error("Due date cannot be in the past", {
           position: "top-left",
           autoClose: 3000,
           hideProgressBar: false,
@@ -83,9 +98,9 @@ const CreateForm = () => {
             </div>
 
             <div>
-              <input type="radio" id="standard" name="priority" value={"Standard"} defaultChecked={true} {...register("priority")} />
-              <label className="priorityLabel" htmlFor="standard">
-                Standard
+              <input type="radio" id="medium" name="priority" value={"Medium"} defaultChecked={true} {...register("priority")} />
+              <label className="priorityLabel" htmlFor="medium">
+                Medium
               </label>
             </div>
             <div>
@@ -113,7 +128,7 @@ const CreateForm = () => {
         Create
       </button>
       <button type="submit" name="random" disabled={isRandomButtonDisabled}>
-        Randomly Generate {numRandomTasks} Tasks
+        {isRandomButtonDisabled ? "Cannot Generate Again" : `Randomly Generate ${numRandomTasks} Tasks`}
       </button>
     </form>
   );
