@@ -7,8 +7,8 @@ export class Task {
     this.id = id || crypto.randomUUID();
     this.title = title;
     this.description = description;
-    this.dueDate = typeof dueDate === "string" || dueDate instanceof String ? new Date(dueDate) : dueDate;
-    this.priority = priority; // "High", "Medium", "Standard"
+    this.dueDate = dueDate instanceof Date ? dueDate : new Date(`${dueDate}T00:00:00.000`);
+    this.priority = priority; // "High", "Medium", "Low"
     this.createdAt = new Date();
     this.updatedAt = new Date();
     this.isResolved = false;
@@ -50,7 +50,7 @@ export class Task {
   }
 
   setDueDate(dueDate) {
-    this.dueDate = new Date(dueDate);
+    this.dueDate = dueDate instanceof Date ? dueDate : new Date(`${dueDate}T00:00:00.000`);
     this.updatedAt = new Date();
   }
 
@@ -63,21 +63,24 @@ export class Task {
   // Considers priority first, then due date, then created date
   compare(otherTask) {
     const priorityOrder = {
-      high: 3,
-      medium: 2,
-      Standard: 1,
+      High: 3,
+      Medium: 2,
+      Low: 1,
     };
-
-    if (priorityOrder[this.priority] > priorityOrder[otherTask.priority]) {
-      return 1;
-    } else if (priorityOrder[this.priority] < priorityOrder[otherTask.priority]) {
-      return -1;
-    }
 
     // Prioritize earlier due dates
     if (this.dueDate < otherTask.dueDate) {
       return 1;
     } else if (this.dueDate > otherTask.dueDate) {
+      return -1;
+    }
+
+    const thisPriority = priorityOrder[this.priority];
+    const otherPriority = priorityOrder[otherTask.priority];
+
+    if (thisPriority > otherPriority) {
+      return 1;
+    } else if (thisPriority < otherPriority) {
       return -1;
     }
 

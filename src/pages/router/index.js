@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import WelcomeScreen from "../welcome";
-import { createRandomTaskHeap } from "../../components/task";
+import { createRandomTaskHeap } from "../../components/task.js";
 import { useDispatch } from "react-redux";
 import { taskAction } from "../../storage/taskReducer";
 const Router = () => {
@@ -8,7 +8,7 @@ const Router = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const heap = createRandomTaskHeap(10);
+    const heap = createRandomTaskHeap(5);
     dispatch(taskAction.fetch(heap));
   }, [dispatch]); //Generate task data
 

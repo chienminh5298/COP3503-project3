@@ -2,7 +2,7 @@ import React from "react";
 
 import "./index.scss";
 import { useSelector } from "react-redux";
-import { formatDateToMMDDYYYY } from "../../utils";
+import { formatDateToYYYYMMDD } from "../../utils";
 import CreateForm from "./createForm";
 
 const Home = () => {
@@ -11,9 +11,9 @@ const Home = () => {
     return (
       <div className="row" key={task.id}>
         <div className="cell title">{task.title}</div>
+        <div className="cell">{formatDateToYYYYMMDD(task.createdAt)}</div>
         <div className="cell">{task.priority}</div>
-        <div className="cell">{formatDateToMMDDYYYY(task.createdAt)}</div>
-        <div className="cell">{formatDateToMMDDYYYY(task.dueDate)}</div>
+        <div className="cell">{formatDateToYYYYMMDD(task.dueDate)}</div>
       </div>
     );
   });
@@ -25,8 +25,8 @@ const Home = () => {
           <div className="header">
             <div className="row">
               <div className="cell">Title</div>
-              <div className="cell">Priority</div>
               <div className="cell">Creation Date</div>
+              <div className="cell">Priority</div>
               <div className="cell">Due Date</div>
             </div>
           </div>

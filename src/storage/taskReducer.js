@@ -9,7 +9,7 @@ const taskSlice = createSlice({
     fetch: (state, action) => {
       state.data = action.payload;
     },
-    createTask: (state, action) => {
+    insertTask: (state, action) => {
       state.data.insert(new Task(action.payload));
       state.data = new Heap(state.data.arr, state.data.sortedHeap);
     },
@@ -23,6 +23,9 @@ const taskSlice = createSlice({
       let oldTask = action.payload.task;
       let newTaskData = action.payload.data;
       let newTask = new Task({ ...oldTask.json(), ...newTaskData });
+      console.log("updateTask");
+      console.log("Old task: ", oldTask);
+      console.log("New task: ", newTask);
       state.data.updateElement(oldTask, newTask);
       state.data = new Heap(state.data.arr, state.data.sortedHeap);
     },

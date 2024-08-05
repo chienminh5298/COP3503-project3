@@ -83,7 +83,7 @@
                 .title {
                     width: 10px;
                     text-overflow: ellipsis;
-                    white-space: nowrap; /* Prevent text from wrapping */
+                    white-space: wrap; /* Prevent text from wrapping */
                     overflow: hidden;
                 }
             }

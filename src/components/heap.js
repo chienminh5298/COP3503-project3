@@ -1,5 +1,3 @@
-import { Task } from "./task";
-
 export class Heap {
   constructor(arr = [], sortedHeap = []) {
     this.arr = arr;
@@ -110,18 +108,30 @@ export class Heap {
   }
 
   updateElement(oldTask, newTask) {
+    console.log("updateElement");
     let i = this.indexOf(oldTask.id);
     if (i === -1) {
       console.log("Element not found");
       return;
     }
-    console.log("????");
+    console.log("Old task: ", oldTask);
+    console.log("New task: ", newTask);
+
     if (oldTask.compare(newTask) !== 0) {
-      this.delete(oldTask);
-      this.insert(newTask);
-    } else {
-      oldTask.setTitle(newTask.title);
       oldTask.setDescription(newTask.description);
+      oldTask.setPriority(newTask.priority);
+      let parentIndex = this._getParentIndex(i);
+      let parent = this.arr[parentIndex];
+      if (parent && parent.compare(this.arr[i]) > 0) {
+        this._swap(parentIndex, i);
+        this._heapifyUp(parentIndex);
+      } else {
+        this._heapifyDown(i);
+      }
+      this.updateSortedHeap();
+    } else {
+      oldTask.setDescription(newTask.description);
+      oldTask.setPriority(newTask.priority);
     }
   }
 
@@ -136,6 +146,4 @@ export class Heap {
     this.sortedHeap = sortedHeap;
     return this.sortedHeap;
   }
-
-
 }
