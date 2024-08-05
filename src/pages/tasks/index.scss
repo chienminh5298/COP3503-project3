@@ -114,6 +114,9 @@
             }
         }
     }
+    .taskCompleted {
+        background-color: var(--third-clg-greener) !important;
+    }
     .updateTaskContainer {
         display: flex;
         flex-direction: column;

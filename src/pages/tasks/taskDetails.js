@@ -3,6 +3,7 @@ import { formatDateToYYYYMMDD } from "../../utils/index.js";
 import { useForm } from "react-hook-form";
 import { taskAction } from "../../storage/taskReducer.js";
 import { useDispatch, useSelector } from "react-redux";
+import { toast, Bounce } from "react-toastify";
 
 const TaskDetails = ({ task, setTask }) => {
   // Handle detail task
@@ -14,10 +15,32 @@ const TaskDetails = ({ task, setTask }) => {
     const buttonName = event.nativeEvent.submitter.name;
     if (buttonName === "resolve") {
       dispatch(taskAction.resolveTask(task));
+      toast.success("Task completed!", {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
     } else if (buttonName === "update") {
       dispatch(taskAction.updateTask({ task, data }));
+      toast.success("Task updated!", {
+        position: "top-left",
+        autoClose: 1500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
     }
-     console.log(heap.sortedHeap);
+    console.log(heap.sortedHeap);
   };
 
   useEffect(() => {
@@ -31,9 +54,8 @@ const TaskDetails = ({ task, setTask }) => {
     setValue("priority", task.priority);
   }, [heap, task, setTask, reset, setValue]);
 
-
   return (
-    <div className="updateTaskContainer">
+    <div className={`updateTaskContainer ${task.isResolved ? "taskCompleted" : ""}`}>
       <h1>Task ID: #{task.id}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="generalInfo">
@@ -54,7 +76,14 @@ const TaskDetails = ({ task, setTask }) => {
               </div>
 
               <div>
-                <input type="radio" id="medium" name="priority" value="Medium" defaultChecked={task.priority === "Medium"} {...register("priority")} />
+                <input
+                  type="radio"
+                  id="medium"
+                  name="priority"
+                  value="Medium"
+                  defaultChecked={task.priority === "Medium"}
+                  {...register("priority")}
+                />
                 <label className="priorityLabel" htmlFor="medium">
                   Medium
                 </label>
@@ -75,15 +104,17 @@ const TaskDetails = ({ task, setTask }) => {
           </div>
         </div>
         <div className="taskDescription">
-          <label className="title" htmlFor="description" >
+          <label className="title" htmlFor="description">
             Description
           </label>
           <textarea id="description" defaultValue={task.description} {...register("description", { required: true })} />
         </div>
         <div className="footer">
-          <button type="submit" name="update" id="updateButton" disabled={task.isResolved}>
-            {task.isResolved ? "Task Already Completed" : "Update"}
-          </button>
+          {!task.isResolved && (
+            <button type="submit" name="update" id="updateButton">
+              Update
+            </button>
+          )}
           <button type="submit" name="resolve" disabled={task.isResolved}>
             {task.isResolved ? "Resolved" : "Resolve Task"}
           </button>

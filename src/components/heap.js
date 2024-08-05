@@ -102,6 +102,10 @@ export class Heap {
 
     this._swap(i, this.arr.length - 1);
     this.arr.pop();
+    if (i === this.arr.length - 1) {
+      this.updateSortedHeap();
+      return;
+    }
 
     let parentIndex = this._getParentIndex(i);
     let parent = this.arr[parentIndex];
