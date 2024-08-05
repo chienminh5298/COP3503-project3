@@ -125,7 +125,7 @@ export class Heap {
       return;
     }
 
-    if (oldTask.compare(newTask) !== 0) {
+    if (oldTask.description !== newTask.description || oldTask.priority !== newTask.priority) {
       oldTask.setDescription(newTask.description);
       oldTask.setPriority(newTask.priority);
       let parentIndex = this._getParentIndex(i);
@@ -137,9 +137,6 @@ export class Heap {
         this._heapifyDown(i);
       }
       this.updateSortedHeap();
-    } else {
-      oldTask.setDescription(newTask.description);
-      oldTask.setPriority(newTask.priority);
     }
   }
 

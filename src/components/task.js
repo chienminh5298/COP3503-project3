@@ -101,7 +101,7 @@ export function createRandomTask() {
   let noun = nouns[getRandomInt(0, nouns.length - 1)].toLowerCase();
   let adverb = adverbs[getRandomInt(0, adverbs.length - 1)].toLowerCase();
   let determiner;
-  let determinerInt = getRandomInt(0, 3);
+  let determinerInt = getRandomInt(0, 2);
   if (determinerInt === 0) {
     determiner = "the";
   } else if (determinerInt === 1) {

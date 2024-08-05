@@ -7,7 +7,7 @@
         margin-right: 20px;
         border-radius: 10px;
         .table {
-            font-size: 20px;
+            font-size: 25px;
             .row {
                 display: flex;
                 .cell {
@@ -51,7 +51,7 @@
         }
         form {
             flex: 1;
-            font-size: 20px;
+            font-size: 25px;
             display: flex;
             flex-direction: column;
             height: 100%;
@@ -73,7 +73,7 @@
                     border: none;
                     background-color: transparent;
                     border-bottom: black dashed 1px;
-                    font-size: 20px;
+                    font-size: 25px;
                     padding: 5px 10px;
                     &:focus{
                         border: solid 1px rgba(182, 182, 182, 0.483);
@@ -100,7 +100,7 @@
                 display: flex;
                 flex-direction: column;
                 textarea {
-                    font-size: 20px;
+                    font-size: 25px;
                     flex: 1;
                     padding: 10px;
                     font-family: "Indie Flower", cursive;
@@ -112,7 +112,7 @@
             }
             button[type="submit"] {
                 padding: 5px 0;
-                font-size: 20px;
+                font-size: 25px;
                 font-family: "Indie Flower", cursive;
                 cursor: pointer;
                 outline: none;
