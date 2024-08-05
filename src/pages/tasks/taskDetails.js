@@ -44,32 +44,32 @@ const TaskDetails = ({ task, setTask }) => {
   };
 
   useEffect(() => {
-    let newTask = heap.arr[heap.indexOf(task.id)];
+    let newTask = heap.arr[heap.indexOf(task.getID())];
     if (newTask) {
       setTask(newTask);
     }
-    setValue("title", task.title);
-    setValue("dueDate", formatDateToYYYYMMDD(task.dueDate));
-    setValue("description", task.description);
-    setValue("priority", task.priority);
+    setValue("title", task.getTitle());
+    setValue("dueDate", formatDateToYYYYMMDD(task.getDueDate()));
+    setValue("description", task.getDescription());
+    setValue("priority", task.getPriority());
   }, [heap, task, setTask, reset, setValue]);
 
   return (
-    <div className={`updateTaskContainer ${task.isResolved ? "taskCompleted" : ""}`}>
-      <h1>Task ID: #{task.id}</h1>
+    <div className={`updateTaskContainer ${task.getIsResolved() ? "taskCompleted" : ""}`}>
+      <h1>Task ID: #{task.getID()}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="generalInfo">
           <div className="taskTitle">
             <label className="title" htmlFor="title">
               Title
             </label>
-            <span>{task.title}</span>
+            <span>{task.getTitle()}</span>
           </div>
           <div className="taskPriority">
             <label className="title">Priority</label>
             <div className="priorityOption">
               <div>
-                <input type="radio" id="high" name="priority" value="High" defaultChecked={task.priority === "High"} {...register("priority")} />
+                <input type="radio" id="high" name="priority" value="High" defaultChecked={task.getPriority() === "High"} {...register("priority")} />
                 <label className="priorityLabel" htmlFor="high">
                   High
                 </label>
@@ -81,7 +81,7 @@ const TaskDetails = ({ task, setTask }) => {
                   id="medium"
                   name="priority"
                   value="Medium"
-                  defaultChecked={task.priority === "Medium"}
+                  defaultChecked={task.getPriority() === "Medium"}
                   {...register("priority")}
                 />
                 <label className="priorityLabel" htmlFor="medium">
@@ -89,7 +89,7 @@ const TaskDetails = ({ task, setTask }) => {
                 </label>
               </div>
               <div>
-                <input type="radio" id="low" name="priority" value="Low" defaultChecked={task.priority === "Low"} {...register("priority")} />
+                <input type="radio" id="low" name="priority" value="Low" defaultChecked={task.getPriority() === "Low"} {...register("priority")} />
                 <label className="priorityLabel" htmlFor="low">
                   Low
                 </label>
@@ -100,23 +100,23 @@ const TaskDetails = ({ task, setTask }) => {
             <label className="title" htmlFor="schedule">
               Due Date
             </label>
-            <input type="date" id="schedule" defaultValue={formatDateToYYYYMMDD(task.dueDate)} {...register("dueDate", { required: true })} />
+            <input type="date" id="schedule" defaultValue={formatDateToYYYYMMDD(task.getDueDate())} {...register("dueDate", { required: true })} />
           </div>
         </div>
         <div className="taskDescription">
           <label className="title" htmlFor="description">
             Description
           </label>
-          <textarea id="description" defaultValue={task.description} {...register("description", { required: true })} />
+          <textarea id="description" defaultValue={task.getDescription()} {...register("description", { required: true })} />
         </div>
         <div className="footer">
-          {!task.isResolved && (
+          {!task.getIsResolved() && (
             <button type="submit" name="update" id="updateButton">
               Update
             </button>
           )}
-          <button type="submit" name="resolve" disabled={task.isResolved}>
-            {task.isResolved ? "Resolved" : "Resolve Task"}
+          <button type="submit" name="resolve" disabled={task.getIsResolved()}>
+            {task.getIsResolved() ? "Resolved" : "Resolve Task"}
           </button>
         </div>
       </form>

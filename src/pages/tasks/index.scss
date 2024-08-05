@@ -64,6 +64,7 @@
             .header {
                 .row {
                     background-color: var(--secondary-clg);
+                    font-weight: bold;
                 }
             }
             .body {
@@ -145,13 +146,13 @@
                 }
             }
             .taskTitle {
-                input {
+                span {
                     flex: 1;
                     font-family: "Indie Flower", cursive;
                     outline: none;
                     border: none;
                     background-color: transparent;
-                    border-bottom: black dashed 1px;
+                    font-weight: bold;
                     font-size: 25px;
                 }
             }
@@ -167,6 +168,11 @@
                 input {
                     width: 40%;
                     text-align: center;
+                    font-family: "Indie Flower", cursive;
+                    letter-spacing: 0.2rem;
+                    font-size: 1.25rem;
+                    padding: 1rem;
+                    font-weight: bold;
                 }
             }
             .taskDescription {

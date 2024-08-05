@@ -18,8 +18,11 @@ export class HashMap {
             let charValue = char.charCodeAt(0);
             hashCode = hashCode + charValue * (PRIME ** i);
         }
-        let index = hashCode % this.keyMap.length;
-        return index;
+        return hashCode;
+    }
+
+    _getBucketIndex(key) {
+        return this._hash(key) % this.keyMap.length;
     }
 
     _resize(){ // Doubles array buckets when array is just below maxLoadFactor, rehashes according to new size.
@@ -39,16 +42,20 @@ export class HashMap {
 
     // Public
     set(key, value) { // Add a new key, value pair if it doesn't already exist.
-        let index = this._hash(key);
-        if (!this.keyMap.hasOwnProperty(index)) { // Index never before used
-            this.keyMap[index] = [ [key, value] ]; // First pair in nested array
+        let bucketIndex = this._getBucketIndex(key);
+        if (!this.keyMap.hasOwnProperty(bucketIndex)) { // Index never before used
+            this.keyMap[bucketIndex] = [ [key, value] ]; // First pair in nested array
             this.entries++;
         }
         else { // Index exists
             // Check if key exists. If key is new, create new entry
-            if (!this.contains(key)) {
-                this.keyMap[index].push([key, value]);
+
+            let slotIndex = this.getSlotIndex(key);
+            if (slotIndex === -1) { // 
+                this.keyMap[bucketIndex].push([key, value]);
                 this.entries++;
+            } else {
+                this.keyMap[bucketIndex][slotIndex] = [key, value];
             }
         }
 
@@ -58,13 +65,13 @@ export class HashMap {
     }
 
     get(key) { // Returns value associated with key. Throws RangeError if key does not exist.
-        let index = this._hash(key);
+        let bucketIndex = this._getBucketIndex(key);
         let keyFound = false;
-        if (Array.isArray(this.keyMap[index])) { // Index exists, look for key
-            for (let i = 0; i < this.keyMap[index].length; i++) {
-                if (this.keyMap[index][i][0] === key) {
+        if (Array.isArray(this.keyMap[bucketIndex])) { // Index exists, look for key
+            for (let i = 0; i < this.keyMap[bucketIndex].length; i++) {
+                if (this.keyMap[bucketIndex][i][0] === key) {
                     keyFound = true;
-                    return this.keyMap[index][i][1];
+                    return this.keyMap[bucketIndex][i][1];
                 }
             }
 
@@ -78,12 +85,12 @@ export class HashMap {
     }
 
     delete(key){ // Removes key value pair associated with key. Returns true if operation successful. Throws RangeError if key does not exist.
-        let index = this._hash(key);
+        let bucketIndex = this._getBucketIndex(key);
         let keyDeleted = false;
-        if (Array.isArray(this.keyMap[index])) { // Index exists, look for key
-            for (let i = 0; i < this.keyMap[index].length; i++) {
-                if (this.keyMap[index][i][0] === key) {
-                    this.keyMap[index].splice(i, 1); // Remove the pair
+        if (Array.isArray(this.keyMap[bucketIndex])) { // Index exists, look for key
+            for (let i = 0; i < this.keyMap[bucketIndex].length; i++) {
+                if (this.keyMap[bucketIndex][i][0] === key) {
+                    this.keyMap[bucketIndex].splice(i, 1); // Remove the pair
                     this.entries--;
                     keyDeleted = true;
                 }
@@ -92,24 +99,23 @@ export class HashMap {
         return keyDeleted;
     }
 
-    contains(key) { // Returns true if map contains element with specific key
-        let index = this._hash(key);
-        let keyFound = false;
-        if (Array.isArray(this.keyMap[index])) { // Index exists, look for key
-            for (let i = 0; i < this.keyMap[index].length; i++) {
-                if (this.keyMap[index][i][0] === key) {
-                    keyFound = true;
+    getSlotIndex(key) { // Returns slot index within bucket if map contains element with specific key or -1 if not
+        let bucketIndex = this._getBucketIndex(key);
+        if (Array.isArray(this.keyMap[bucketIndex])) { // Index exists, look for key
+            for (let i = 0; i < this.keyMap[bucketIndex].length; i++) {
+                if (this.keyMap[bucketIndex][i][0] === key) {
+                    return i;
                 }
             }
         }
-        return keyFound;
+        return -1;
     }
 
-    clear(){ // Deletes all values from hashmap, size = 50 (default)
+    clear(){ // Deletes all values from hashmap, size = 16 (default)
         for (let i = 0; i < this.keyMap.length; i++) {
             this.keyMap[i] = null;
         }
-        this.keyMap = new Array(5);
+        this.keyMap = new Array(16);
         this.entries = 0;
     }
 

@@ -9,11 +9,11 @@ const Home = () => {
   const data = useSelector((state) => state.taskReducer.data.sortedHeap.slice(0, 10));
   const renderData = data.map((task) => {
     return (
-      <div className="row" key={task.id}>
-        <div className="cell title">{task.title}</div>
-        <div className="cell">{formatDateToYYYYMMDD(task.createdAt)}</div>
-        <div className="cell">{task.priority}</div>
-        <div className="cell">{formatDateToYYYYMMDD(task.dueDate)}</div>
+      <div className="row" key={task.getID()}>
+        <div className="cell title">{task.getTitle()}</div>
+        <div className="cell">{formatDateToYYYYMMDD(task.getCreatedAt())}</div>
+        <div className="cell">{task.getPriority()}</div>
+        <div className="cell">{formatDateToYYYYMMDD(task.getDueDate())}</div>
       </div>
     );
   });

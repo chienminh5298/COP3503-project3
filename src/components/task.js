@@ -5,14 +5,15 @@ import { HashMap } from "../components/hashmap.js";
 
 export class Task {
   constructor({ id, title, description, dueDate, priority }) {
-    this.id = id || crypto.randomUUID();
-    this.title = title;
-    this.description = description;
-    this.dueDate = dueDate instanceof Date ? dueDate : new Date(`${dueDate}T00:00:00.000`);
-    this.priority = priority; // "High", "Medium", "Low"
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
-    this.isResolved = false;
+    this.hashMap = new HashMap();
+    this.hashMap.set("id", id || crypto.randomUUID());
+    this.hashMap.set("title", title);
+    this.hashMap.set("description", description);
+    this.hashMap.set("priority", priority);
+    this.hashMap.set("dueDate", dueDate instanceof Date ? dueDate : new Date(`${dueDate}T00:00:00.000`));
+    this.hashMap.set("createdAt", new Date());
+    this.hashMap.set("updatedAt", new Date());
+    this.hashMap.set("isResolved", false);
   }
 
   json() {
@@ -20,49 +21,88 @@ export class Task {
   }
 
   print() {
-    console.log(`ID: ${this.id}`);
-    console.log(`Title: ${this.title}`);
-    console.log(`Description: ${this.description}`);
-    console.log(`Priority: ${this.priority}`);
-    console.log(`Due date: ${this.dueDate}`);
-    console.log(`Created at: ${this.createdAt}`);
-    console.log(`Updated at: ${this.updatedAt}`);
+    console.log(`ID: ${this.getID()}`);
+    console.log(`Title: ${this.getTitle()}`);
+    console.log(`Description: ${this.getDescription()}`);
+    console.log(`Priority: ${this.getPriority()}`);
+    console.log(`Due date: ${this.getDueDate()}`);
+    console.log(`Created at: ${this.getCreatedAt()}`);
+    console.log(`Updated at: ${this.getUpdatedAt()}`);
+    console.log(`Is resolved: ${this.getIsResolved()}`);
   }
 
   // Setter functions also update 'updatedAt' to the current time
   setID(id) {
-    this.id = id;
-    this.updatedAt = new Date();
+    this.hashMap.set("id", id);
+    this.setUpdatedAt();
   }
 
   setTitle(title) {
-    this.title = title;
-    this.updatedAt = new Date();
+    this.hashMap.set("title", title);
+    this.setUpdatedAt();
   }
 
   setDescription(description) {
-    this.description = description;
-    this.updatedAt = new Date();
+    console.log(description);
+    this.hashMap.set("description", description);
+    console.log(this.hashMap.get("description"));
+    this.setUpdatedAt();
   }
 
   setPriority(priority) {
-    this.priority = priority;
-    this.updatedAt = new Date();
+    this.hashMap.set("priority", priority);
+    this.setUpdatedAt();
   }
 
   setDueDate(dueDate) {
-    this.dueDate = dueDate instanceof Date ? dueDate : new Date(`${dueDate}T00:00:00.000`);
-    this.updatedAt = new Date();
+    this.hashMap.set("dueDate", dueDate instanceof Date ? dueDate : new Date(`${dueDate}T00:00:00.000`));
+    this.setUpdatedAt();
   }
 
   setResolved() {
-    this.isResolved = true;
-    this.updatedAt = new Date();
+    this.hashMap.set("isResolved", true);
+    this.setUpdatedAt();
+  }
+
+  setUpdatedAt() {
+    this.hashMap.set("updatedAt", new Date());
+  }
+
+  getIsResolved() {
+    return this.hashMap.get("isResolved");
+  }
+
+  getID() {
+    return this.hashMap.get("id");
+  }
+
+  getTitle() {
+    return this.hashMap.get("title");
+  }
+
+  getDescription() {
+    return this.hashMap.get("description");
+  }
+
+  getDueDate() {
+    return this.hashMap.get("dueDate");
+  }
+
+  getPriority() {
+    return this.hashMap.get("priority");
+  }
+
+  getCreatedAt() {
+    return this.hashMap.get("createdAt");
+  }
+
+  getUpdatedAt() {
+    return this.hashMap.get("updatedAt");
   }
 
   // Comparison method - returns 1 if 'this' is a higher overall priority, -1 if 'other' is higher, 0 if same
   // Considers priority first, then due date, then created date
-  compare(otherTask) {
+  compare(task) {
     const priorityOrder = {
       High: 3,
       Medium: 2,
@@ -70,14 +110,14 @@ export class Task {
     };
 
     // Prioritize earlier due dates
-    if (this.dueDate < otherTask.dueDate) {
+    if (this.getDueDate() < task.getDueDate()) {
       return 1;
-    } else if (this.dueDate > otherTask.dueDate) {
+    } else if (this.getDueDate() > task.getDueDate()) {
       return -1;
     }
 
-    const thisPriority = priorityOrder[this.priority];
-    const otherPriority = priorityOrder[otherTask.priority];
+    const thisPriority = priorityOrder[this.getPriority()];
+    const otherPriority = priorityOrder[task.getPriority()];
 
     if (thisPriority > otherPriority) {
       return 1;
@@ -86,9 +126,9 @@ export class Task {
     }
 
     // Prioritize earlier creation dates
-    if (this.createdAt < otherTask.createdAt) {
+    if (this.getCreatedAt() < task.getCreatedAt()) {
       return 1;
-    } else if (this.createdAt > otherTask.createdAt) {
+    } else if (this.getCreatedAt() > task.getCreatedAt()) {
       return -1;
     }
 

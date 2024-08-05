@@ -1,3 +1,5 @@
+import { formatDateToYYYYMMDD } from "../utils/index.js";
+
 export class Heap {
   constructor(arr = [], sortedHeap = []) {
     this.arr = arr;
@@ -24,7 +26,7 @@ export class Heap {
 
   indexOf(id) {
     for (let i = 0; i < this.arr.length; i++) {
-      if (this.arr[i].id === id) {
+      if (this.arr[i].getID() === id) {
         return i;
       }
     }
@@ -88,7 +90,7 @@ export class Heap {
   delete(task) {
     let i = 0;
     while (i < this.arr.length) {
-      if (this.arr[i].id === task.id) {
+      if (this.arr[i].getID() === task.getID()) {
         break;
       }
       i++;
@@ -119,16 +121,17 @@ export class Heap {
   }
 
   updateElement(task, newData) {
-    let i = this.indexOf(task.id);
+    console.log(newData)
+    let i = this.indexOf(task.getID());
     if (i === -1) {
       console.log("Element not found in updateElement");
       return;
     }
 
-
     const { description, dueDate, priority } = newData;
+    console.log(description, dueDate, priority)
     task.setDescription(description);
-    if (task.dueDate !== dueDate || task.priority !== priority) {
+    if (formatDateToYYYYMMDD(task.getDueDate()) !== dueDate || task.getPriority() !== priority) {
       task.setDueDate(dueDate);
       task.setPriority(priority);
       let parentIndex = this._getParentIndex(i);

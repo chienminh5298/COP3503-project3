@@ -16,17 +16,17 @@ const Tasks = () => {
   const [page, setPage] = useState(0);
   const pageData = sortedHeap.slice(page * MAX_PER_PAGE, MAX_PER_PAGE * (page + 1));
   const renderData = pageData.map((task) => {
-    if (!task.createdAt || !task.dueDate) {
-      console.log("task.createdAt or task.dueDate is NULL.");
+    if (!task.getCreatedAt() || !task.getDueDate()) {
+      console.log("task.getCreatedAt() or task.getDueDate() is NULL.");
     }
 
     return (
-      <div className="row" key={task.id} onClick={() => setTask(task)}>
-        <div className="cell">{task.id}</div>
-        <div className="cell title">{task.title}</div>
-        <div className="cell">{task.createdAt ? formatDateToYYYYMMDD(task.createdAt) : "NULL"}</div>
-        <div className="cell">{task.priority}</div>
-        <div className="cell">{task.dueDate ? formatDateToYYYYMMDD(task.dueDate) : "NULL"}</div>
+      <div className="row" key={task.getID()} onClick={() => setTask(task)}>
+        <div className="cell">{task.getID()}</div>
+        <div className="cell title">{task.getTitle()}</div>
+        <div className="cell">{task.getCreatedAt() ? formatDateToYYYYMMDD(task.getCreatedAt()) : "NULL"}</div>
+        <div className="cell">{task.getPriority()}</div>
+        <div className="cell">{task.getDueDate() ? formatDateToYYYYMMDD(task.getDueDate()) : "NULL"}</div>
       </div>
     );
   });
