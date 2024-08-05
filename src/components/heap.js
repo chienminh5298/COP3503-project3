@@ -118,19 +118,22 @@ export class Heap {
     this.updateSortedHeap();
   }
 
-  updateElement(oldTask, newTask) {
-    let i = this.indexOf(oldTask.id);
+  updateElement(task, newData) {
+    let i = this.indexOf(task.id);
     if (i === -1) {
       console.log("Element not found in updateElement");
       return;
     }
 
-    if (oldTask.description !== newTask.description || oldTask.priority !== newTask.priority) {
-      oldTask.setDescription(newTask.description);
-      oldTask.setPriority(newTask.priority);
+
+    const { description, dueDate, priority } = newData;
+    task.setDescription(description);
+    if (task.dueDate !== dueDate || task.priority !== priority) {
+      task.setDueDate(dueDate);
+      task.setPriority(priority);
       let parentIndex = this._getParentIndex(i);
       let parent = this.arr[parentIndex];
-      if (parent && parent.compare(this.arr[i]) > 0) {
+      if (parent && parent.compare(task) > 0) {
         this._swap(parentIndex, i);
         this._heapifyUp(parentIndex);
       } else {

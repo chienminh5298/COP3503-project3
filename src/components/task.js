@@ -1,6 +1,7 @@
 import { getRandomInt, getRandomPriority, getRandomFutureDate } from "../utils/index.js";
 import { nouns, verbs, names, adverbs } from "../components/words";
 import { Heap } from "../components/heap.js";
+import { HashMap } from "../components/hashmap.js";
 
 export class Task {
   constructor({ id, title, description, dueDate, priority }) {

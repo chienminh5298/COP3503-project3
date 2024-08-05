@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Task } from "../components/task";
 import { Heap } from "../components/heap";
 
 const taskSlice = createSlice({
@@ -28,13 +27,9 @@ const taskSlice = createSlice({
       state.data = new Heap(state.data.arr, state.data.sortedHeap);
     },
     updateTask: (state, action) => {
-      let oldTask = action.payload.task;
-      let newTaskData = action.payload.data;
-      let newTask = new Task({ ...oldTask.json(), ...newTaskData });
-      console.log("updateTask");
-      console.log("Old task: ", oldTask);
-      console.log("New task: ", newTask);
-      state.data.updateElement(oldTask, newTask);
+      let task = action.payload.task;
+      let newData = action.payload.data;
+      state.data.updateElement(task, newData);
       state.data = new Heap(state.data.arr, state.data.sortedHeap);
     },
   },
