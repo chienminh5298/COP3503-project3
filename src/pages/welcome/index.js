@@ -9,7 +9,7 @@ const Index = ({setScreen}) => {
     <div className='container'>
       <div className='greetingContainer'>
         <h1>Welcome to our Project 3</h1>
-        <h1>COP3503</h1>
+        <h1>COP3530</h1>
         <h1>Task Scheduling System</h1>
       </div> 
       <div className='buttonContainer'>
