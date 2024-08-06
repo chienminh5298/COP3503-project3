@@ -111,7 +111,7 @@ export class Heap {
 
     let parentIndex = this._getParentIndex(i);
     let parent = this.arr[parentIndex];
-    if (parent && parent.compare(this.arr[i]) > 0) {
+    if (parent && parent.compare(this.arr[i]) < 0) {
       this._swap(parentIndex, i);
       this._heapifyUp(parentIndex);
     } else {
@@ -136,7 +136,7 @@ export class Heap {
       task.setPriority(priority);
       let parentIndex = this._getParentIndex(i);
       let parent = this.arr[parentIndex];
-      if (parent && parent.compare(task) > 0) {
+      if (parent && parent.compare(task) < 0) {
         this._swap(parentIndex, i);
         this._heapifyUp(parentIndex);
       } else {
